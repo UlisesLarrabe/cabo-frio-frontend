@@ -37,7 +37,7 @@ const FormOrders = () => {
   const isDisabled = description.length === 0 || totalPrice === 0;
 
   return (
-    <form className="flex flex-col gap-4 w-3/4 border p-4 rounded-lg border-eerie-black">
+    <form className="flex flex-col gap-4 w-3/4 max-w-[1200px] border p-4 rounded-lg border-eerie-black">
       <div className="flex flex-col gap-1">
         <h2 className="text-3xl font-bold">Información del Pedido</h2>
         <p>Complete el formulario para registrar un nuevo pedido</p>
