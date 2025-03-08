@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Onest } from "next/font/google";
 import "./globals.css";
+import { MovementsProvider } from "@/context/MovementsContext";
 
 const onest = Onest({
   variable: "--font-onest",
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${onest.variable} `}>{children}</body>
+      <MovementsProvider>
+        <body className={`${onest.variable} bg-snow `}>{children}</body>
+      </MovementsProvider>
     </html>
   );
 }
