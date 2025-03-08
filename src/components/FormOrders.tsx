@@ -78,7 +78,7 @@ const FormOrders = () => {
         <div className="flex justify-between">
           <h2 className="font-semibold text-xl">Productos</h2>
           <button
-            className="text-eerie-black px-4 py-2 rounded-lg border border-eerie-black cursor-pointer"
+            className="text-eerie-black px-4 py-2 rounded-lg border border-eerie-black cursor-pointer hover:bg-eerie-black hover:text-snow"
             onClick={handleAddProduct}
           >
             Agregar producto
