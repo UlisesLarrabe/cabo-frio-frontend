@@ -3,7 +3,7 @@ import { LOCALS } from "@/consts/locals";
 import React, { useState } from "react";
 
 interface DescriptionProduct {
-  product: string;
+  item: string;
   quantity: number;
   type: string;
 }
@@ -25,7 +25,10 @@ const FormOrders = () => {
 
   const handleAddProduct = (e: React.FormEvent) => {
     e.preventDefault();
-    setDescription([...description, { product, quantity, type: unitType }]);
+    setDescription([
+      ...description,
+      { item: product, quantity, type: unitType },
+    ]);
     setProduct("Helado");
     setQuantity(1);
     setUnitType("kg");
@@ -121,7 +124,7 @@ const FormOrders = () => {
         {description.length > 0 &&
           description.map((product, index) => (
             <div key={index} className="flex gap-2 ">
-              <span className="p-2  rounded-lg w-1/3">{product.product}</span>
+              <span className="p-2  rounded-lg w-1/3">{product.item}</span>
               <span className="p-2 rounded-lg w-1/3">{product.quantity}</span>
               <span className="p-2 rounded-lg w-1/3">{product.type}</span>
             </div>
