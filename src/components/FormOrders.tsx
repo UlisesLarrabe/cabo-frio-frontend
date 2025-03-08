@@ -31,7 +31,7 @@ const FormOrders = () => {
     setUnitType("kg");
   };
 
-  console.log(description);
+  const isDisabled = description.length === 0 || totalPrice === 0;
 
   return (
     <form className="flex flex-col gap-4 w-1/2">
@@ -134,7 +134,8 @@ const FormOrders = () => {
 
       <button
         type="submit"
-        className="bg-eerie-black text-snow px-4 py-2 rounded-lg cursor-pointer"
+        className="bg-eerie-black text-snow px-4 py-2 rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={isDisabled}
       >
         Guardar
       </button>
