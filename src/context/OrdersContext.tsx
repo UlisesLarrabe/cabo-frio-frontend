@@ -60,8 +60,8 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
       const response = await fetch(`${API_URL}/orders`);
       const data = await response.json();
       setOrders(data);
-    } catch (error) {
-      console.error("Error al traer los pedidos", error);
+    } catch {
+      console.error("Error al traer los pedidos");
     }
   };
 
@@ -70,8 +70,8 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
       const response = await fetch(`${API_URL}/orders/${local}`);
       const data = await response.json();
       setOrders(data);
-    } catch (error) {
-      console.error("Error al traer los pedidos", error);
+    } catch {
+      console.error("Error al traer los pedidos");
     }
   };
 
