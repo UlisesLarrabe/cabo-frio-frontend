@@ -61,7 +61,7 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
       setOrders(data);
     } catch (error) {
-      console.error("Error al traer los pedidos");
+      console.error("Error al traer los pedidos", error);
     }
   };
 
@@ -71,7 +71,7 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
       setOrders(data);
     } catch (error) {
-      console.error("Error al traer los pedidos");
+      console.error("Error al traer los pedidos", error);
     }
   };
 
