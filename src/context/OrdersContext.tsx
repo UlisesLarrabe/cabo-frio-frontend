@@ -40,9 +40,11 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
         },
         body: JSON.stringify(order),
       });
+
       if (response.ok) {
         return response;
       }
+
       throw new Error("Error al enviar el pedido");
     } catch {
       return new Response(
