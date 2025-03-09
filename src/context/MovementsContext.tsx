@@ -6,7 +6,7 @@ interface Movement {
   _id: string;
   type: "income" | "outcome";
   amount: number;
-  date: string;
+  createdAt: string;
   reason?: string;
   paymentMethod: "cash" | "mercado_pago" | "pedidos_ya";
 }
@@ -14,6 +14,7 @@ interface Movement {
 interface MovementsContextType {
   movements: Movement[];
   setMovements: React.Dispatch<React.SetStateAction<Movement[]>>;
+  getMovements: () => Promise<void>;
 }
 
 export const movementsCocntext = createContext<
@@ -34,7 +35,9 @@ export function MovementsProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <movementsCocntext.Provider value={{ movements, setMovements }}>
+    <movementsCocntext.Provider
+      value={{ movements, setMovements, getMovements }}
+    >
       {children}
     </movementsCocntext.Provider>
   );

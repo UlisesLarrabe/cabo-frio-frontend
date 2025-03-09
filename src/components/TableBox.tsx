@@ -30,6 +30,7 @@ const TableBox = () => {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {movements.map((movement) => {
+            console.log(movement);
             const paymentString =
               movement.paymentMethod === "cash"
                 ? "Efectivo"
@@ -44,7 +45,7 @@ const TableBox = () => {
             return (
               <tr key={movement._id}>
                 <Tdescription>
-                  {dayjs(movement.date).format("HH:mm")}
+                  {dayjs(movement.createdAt).format("HH:mm")}
                 </Tdescription>
                 <Tdescription>
                   <span
