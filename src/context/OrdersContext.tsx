@@ -44,7 +44,7 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
         return response;
       }
       throw new Error("Error al enviar el pedido");
-    } catch (error) {
+    } catch {
       return new Response(
         JSON.stringify({ error: "No se pudo enviar el pedido" }),
         {
