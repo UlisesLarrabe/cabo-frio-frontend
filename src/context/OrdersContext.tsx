@@ -21,6 +21,7 @@ interface OrdersContextType {
   setOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   addOrder: (order: Order) => Promise<Response>;
   getOrders: () => Promise<void>;
+  getOrdersByLocal: (local: string) => Promise<void>;
 }
 
 export const OrdersContext = createContext<OrdersContextType | undefined>(
@@ -64,11 +65,23 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const getOrdersByLocal = async (local: string) => {
+    try {
+      const response = await fetch(`${API_URL}/orders/${local}`);
+      const data = await response.json();
+      setOrders(data);
+    } catch (error) {
+      console.error("Error al traer los pedidos");
+    }
+  };
+
   useEffect(() => {
     getOrders();
   }, []);
   return (
-    <OrdersContext.Provider value={{ orders, setOrders, addOrder, getOrders }}>
+    <OrdersContext.Provider
+      value={{ orders, setOrders, addOrder, getOrders, getOrdersByLocal }}
+    >
       {children}
     </OrdersContext.Provider>
   );
