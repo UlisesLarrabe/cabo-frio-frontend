@@ -1,7 +1,7 @@
 "use client";
 import { API_URL } from "@/consts/api_url";
 import { Dayjs } from "dayjs";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 interface Order {
   _id?: string;
@@ -20,6 +20,7 @@ interface OrdersContextType {
   orders: Order[];
   setOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   addOrder: (order: Order) => Promise<Response>;
+  getOrders: () => Promise<void>;
 }
 
 export const OrdersContext = createContext<OrdersContextType | undefined>(
@@ -43,7 +44,6 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
       }
       throw new Error("Error al enviar el pedido");
     } catch (error) {
-      console.error("Error al enviar el pedido");
       return new Response(
         JSON.stringify({ error: "No se pudo enviar el pedido" }),
         {
@@ -53,8 +53,22 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
       );
     }
   };
+
+  const getOrders = async () => {
+    try {
+      const response = await fetch(`${API_URL}/orders`);
+      const data = await response.json();
+      setOrders(data);
+    } catch (error) {
+      console.error("Error al traer los pedidos");
+    }
+  };
+
+  useEffect(() => {
+    getOrders();
+  }, []);
   return (
-    <OrdersContext.Provider value={{ orders, setOrders, addOrder }}>
+    <OrdersContext.Provider value={{ orders, setOrders, addOrder, getOrders }}>
       {children}
     </OrdersContext.Provider>
   );

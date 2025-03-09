@@ -28,7 +28,7 @@ const FormOrders = () => {
   const [product, setProduct] = useState("Helado");
   const [quantity, setQuantity] = useState(1);
   const [unitType, setUnitType] = useState("kg");
-  const { addOrder } = useOrdersContext();
+  const { addOrder, setOrders, getOrders } = useOrdersContext();
   const { getMovements, setMovements } = useMovementsContext();
   const [loading, setLoading] = useState(false);
 
@@ -73,11 +73,14 @@ const FormOrders = () => {
       } else {
         toast.error("Error al guardar el pedido");
       }
-      response
-        .json()
-        .then((data) => setMovements((prev) => [...prev, data.movement]));
+      response.json().then((data) => {
+        setMovements((prev) => [...prev, data.movement]);
+        setOrders((prev) => [...prev, data.order]);
+      });
+
       setLoading(false);
     });
+    await getOrders();
     await getMovements();
   };
 
