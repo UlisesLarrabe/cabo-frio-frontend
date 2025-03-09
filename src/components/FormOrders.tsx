@@ -1,6 +1,12 @@
 "use client";
 import { LOCALS } from "@/consts/locals";
+import { useOrdersContext } from "@/hooks/useOrdersContext";
 import React, { useState } from "react";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { Toaster, toast } from "sonner";
+import { useMovementsContext } from "@/hooks/useMovementsContext";
 
 interface DescriptionProduct {
   item: string;
@@ -22,6 +28,9 @@ const FormOrders = () => {
   const [product, setProduct] = useState("Helado");
   const [quantity, setQuantity] = useState(1);
   const [unitType, setUnitType] = useState("kg");
+  const { addOrder } = useOrdersContext();
+  const { getMovements, setMovements } = useMovementsContext();
+  const [loading, setLoading] = useState(false);
 
   const handleAddProduct = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,10 +43,47 @@ const FormOrders = () => {
     setUnitType("kg");
   };
 
-  const isDisabled = description.length === 0 || totalPrice === 0;
+  const isDisabled = description.length === 0 || totalPrice === 0 || loading;
+
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    const nowInBuenosAires = dayjs().tz("America/Argentina/Buenos_Aires");
+
+    e.preventDefault();
+    const order = {
+      local,
+      totalPrice,
+      paymentMethod: paymentMethod as "cash" | "mercado_pago" | "pedidos_ya",
+      description,
+      createdAt: nowInBuenosAires,
+    };
+    setLoading(true);
+    addOrder(order).then((response) => {
+      if (response.ok) {
+        toast.success("Pedido guardado correctamente");
+        setDescription([]);
+        setTotalPrice(0);
+        setLocal(LOCALS[0]);
+        setPaymentMethod(options[0].value);
+        setProduct("Helado");
+        setQuantity(1);
+        setUnitType("kg");
+      } else {
+        toast.error("Error al guardar el pedido");
+      }
+      response
+        .json()
+        .then((data) => setMovements((prev) => [...prev, data.movement]));
+      setLoading(false);
+    });
+    await getMovements();
+  };
 
   return (
     <form className="flex flex-col gap-4 w-3/4 max-w-[1200px] border p-4 rounded-lg border-eerie-black">
+      <Toaster />
       <div className="flex flex-col gap-1">
         <h2 className="text-3xl font-bold">Información del Pedido</h2>
         <p>Complete el formulario para registrar un nuevo pedido</p>
@@ -144,8 +190,9 @@ const FormOrders = () => {
         type="submit"
         className="bg-eerie-black text-snow px-4 py-2 rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={isDisabled}
+        onClick={handleSubmit}
       >
-        Guardar
+        {loading ? "Guardando pedido..." : "Guardar"}
       </button>
     </form>
   );
