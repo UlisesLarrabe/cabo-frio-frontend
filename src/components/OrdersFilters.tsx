@@ -26,10 +26,10 @@ const OrdersFilters = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label>Local</label>
+          <label className="text-lg font-medium text-gray-700">Local</label>
           <select
             onChange={handleLocalChange}
-            className="p-2 border border-gray-300 rounded-lg"
+            className="p-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="allLocals">Todos los locales</option>
             {LOCALS.map((local) => (
