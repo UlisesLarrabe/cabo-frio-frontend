@@ -30,7 +30,6 @@ const TableBox = () => {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {movements.map((movement) => {
-            console.log(movement);
             const paymentString =
               movement.paymentMethod === "cash"
                 ? "Efectivo"

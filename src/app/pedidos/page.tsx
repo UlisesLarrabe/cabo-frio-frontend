@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import TableOrders from "@/components/TableOrders";
 import Link from "next/link";
 
 export default function Home() {
@@ -14,6 +15,9 @@ export default function Home() {
           >
             Nuevo pedido
           </Link>
+        </section>
+        <section>
+          <TableOrders />
         </section>
       </main>
     </>
