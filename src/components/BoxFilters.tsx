@@ -24,7 +24,7 @@ const BoxFilters = () => {
   };
 
   return (
-    <div className="p-2 border flex justify-center  flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2">
+    <div className="p-2 border flex justify-center  flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2 w-full md:w-1/3">
       <h2 className="text-2xl font-semibold">Filtros</h2>
       <div className="flex flex-col gap-2">
         <label className="text-sm font-semibold" htmlFor="date">
