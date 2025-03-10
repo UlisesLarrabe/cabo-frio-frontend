@@ -1,12 +1,13 @@
 "use client";
 import { API_URL } from "@/consts/api_url";
+import dayjs from "dayjs";
 import React, { createContext, useEffect, useState } from "react";
 
 interface Movement {
-  _id: string;
+  _id?: string;
   type: "income" | "outcome";
   amount: number;
-  createdAt: string;
+  createdAt: string | dayjs.Dayjs;
   reason?: string;
   paymentMethod: "cash" | "mercado_pago" | "pedidos_ya";
   local: string;
@@ -22,6 +23,7 @@ interface MovementsContextType {
     type: string,
     paymentMethod: string
   ) => Promise<void>;
+  postMovement: (movement: Movement) => Promise<void>;
 }
 
 export const movementsCocntext = createContext<
@@ -50,13 +52,31 @@ export function MovementsProvider({ children }: { children: React.ReactNode }) {
     setMovements(data);
   };
 
+  const postMovement = async (movement: Movement) => {
+    const response = await fetch(`${API_URL}/movements`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(movement),
+    });
+    const data = await response.json();
+    setMovements([...movements, data.movement]);
+  };
+
   useEffect(() => {
     getMovements();
   }, []);
 
   return (
     <movementsCocntext.Provider
-      value={{ movements, setMovements, getMovements, getMovementsWithFilters }}
+      value={{
+        movements,
+        setMovements,
+        getMovements,
+        getMovementsWithFilters,
+        postMovement,
+      }}
     >
       {children}
     </movementsCocntext.Provider>
