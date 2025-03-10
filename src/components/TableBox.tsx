@@ -9,7 +9,6 @@ import Tdescription from "./Tdescription";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-const nowInBuenosAires = dayjs().tz("America/Argentina/Buenos_Aires");
 
 const TableBox = () => {
   const { movements } = useMovementsContext();
@@ -17,7 +16,6 @@ const TableBox = () => {
   return (
     <div className="p-2 border flex justify-center flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2 w-full md:w-2/3">
       <h2 className="font-semibold text-2xl">Movimientos del día</h2>
-      <p className="text-gray-700">{nowInBuenosAires.format("DD/MM/YYYY")}</p>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
