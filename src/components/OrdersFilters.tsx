@@ -2,7 +2,7 @@
 import { LOCALS } from "@/consts/locals";
 import { useOrdersContext } from "@/hooks/useOrdersContext";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useState } from "react";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
@@ -10,13 +10,18 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const OrdersFilters = () => {
-  const { getOrdersByLocal, getOrders, getOrdersByDate } = useOrdersContext();
+  const { getOrders, getOrdersByDate, getByDateAndLocal } = useOrdersContext();
+  const [local, setLocal] = useState("allLocals");
+  const [date, setDate] = useState(
+    dayjs().tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD")
+  );
 
   const handleLocalChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "allLocals") {
       await getOrders();
     } else {
-      await getOrdersByLocal(e.target.value);
+      setLocal(e.target.value);
+      await getByDateAndLocal(date, e.target.value);
     }
   };
 
@@ -24,7 +29,12 @@ const OrdersFilters = () => {
     const date = dayjs(e.target.value)
       .tz("America/Argentina/Buenos_Aires")
       .format("YYYY-MM-DD");
-    await getOrdersByDate(date);
+    setDate(date);
+    if (local === "allLocals") {
+      await getOrdersByDate(date);
+    } else {
+      await getByDateAndLocal(date, local);
+    }
   };
 
   return (

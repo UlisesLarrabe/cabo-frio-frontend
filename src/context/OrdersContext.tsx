@@ -23,6 +23,7 @@ interface OrdersContextType {
   getOrders: () => Promise<void>;
   getOrdersByLocal: (local: string) => Promise<void>;
   getOrdersByDate: (date: string) => Promise<void>;
+  getByDateAndLocal: (date: string, local: string) => Promise<void>;
 }
 
 export const OrdersContext = createContext<OrdersContextType | undefined>(
@@ -88,6 +89,16 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const getByDateAndLocal = async (date: string, local: string) => {
+    try {
+      const response = await fetch(`${API_URL}/orders/date/${date}/${local}`);
+      const data = await response.json();
+      setOrders(data);
+    } catch {
+      console.error("Error al traer los pedidos");
+    }
+  };
+
   useEffect(() => {
     getOrders();
   }, []);
@@ -100,6 +111,7 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
         getOrders,
         getOrdersByLocal,
         getOrdersByDate,
+        getByDateAndLocal,
       }}
     >
       {children}
