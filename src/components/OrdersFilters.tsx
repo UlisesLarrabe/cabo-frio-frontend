@@ -1,10 +1,16 @@
 "use client";
 import { LOCALS } from "@/consts/locals";
 import { useOrdersContext } from "@/hooks/useOrdersContext";
+import dayjs from "dayjs";
 import React from "react";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const OrdersFilters = () => {
-  const { getOrdersByLocal, getOrders } = useOrdersContext();
+  const { getOrdersByLocal, getOrders, getOrdersByDate } = useOrdersContext();
 
   const handleLocalChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "allLocals") {
@@ -14,15 +20,23 @@ const OrdersFilters = () => {
     }
   };
 
+  const handleDateChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = dayjs(e.target.value)
+      .tz("America/Argentina/Buenos_Aires")
+      .format("YYYY-MM-DD");
+    await getOrdersByDate(date);
+  };
+
   return (
     <section className="flex flex-col w-full gap-4">
       <h2 className="text-2xl font-semibold">Filtros</h2>
       <div className="flex gap-4">
         <div className="flex flex-col gap-2 w-full">
-          <label>Fecha</label>
+          <label className="text-lg font-medium text-gray-700">Fecha</label>
           <input
             type="date"
-            className="p-2 border border-gray-300 rounded-lg "
+            className="p-2 border  border-gray-300 rounded-lg bg-white text-gray-700 "
+            onChange={handleDateChange}
           />
         </div>
         <div className="flex flex-col gap-2 w-full">
