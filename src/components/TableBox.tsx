@@ -15,7 +15,7 @@ const TableBox = () => {
   const { movements } = useMovementsContext();
 
   return (
-    <div className="p-2 border flex justify-center  flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2">
+    <div className="p-2 border flex justify-center  flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2 w-full">
       <h2 className="font-semibold text-2xl">Movimientos del dia</h2>
       <p className="text-gray-700">{nowInBuenosAires.format("DD/MM/YYYY")}</p>
       <table className="min-w-full divide-y divide-gray-200">
@@ -26,6 +26,7 @@ const TableBox = () => {
             <TheadBox title="Método" />
             <TheadBox title="Monto" />
             <TheadBox title="Descripción" />
+            <TheadBox title="Local" />
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -56,6 +57,7 @@ const TableBox = () => {
                 <Tdescription>{paymentString}</Tdescription>
                 <Tdescription>${movement.amount}</Tdescription>
                 <Tdescription>{movement.reason}</Tdescription>
+                <Tdescription>{movement.local}</Tdescription>
               </tr>
             );
           })}
