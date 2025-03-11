@@ -10,7 +10,7 @@ const FlavourForm = () => {
   const [stock, setStock] = useState(0);
   const [loading, setLoading] = useState(false);
   const isDisabled = loading || !name || !stock;
-  const { addFlavour, flavours } = useFlavoursContext();
+  const { addFlavour } = useFlavoursContext();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
