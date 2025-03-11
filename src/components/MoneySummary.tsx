@@ -46,11 +46,11 @@ const MoneySummary = () => {
   console.log(cash, mercado_pago, pedidos_ya, total_out, total_in);
 
   return (
-    <section className="flex w-full gap-4">
+    <section className="flex flex-col md:flex-row w-full gap-4">
       <SummaryArticle
         title="Efectivo"
         price={cash}
-        info={`Despues de retiro: $${cash - total_out}`}
+        info={`Después de retiros: $${cash - total_out}`}
       />
       <SummaryArticle title="Mercado Pago" price={mercado_pago} />
       <SummaryArticle title="Pedidos Ya" price={pedidos_ya} />
