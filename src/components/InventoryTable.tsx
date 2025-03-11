@@ -3,6 +3,7 @@ import { useFlavoursContext } from "@/hooks/useFlavoursContext";
 import React from "react";
 import TheadBox from "./TheadBox";
 import Tdescription from "./Tdescription";
+import Link from "next/link";
 
 const InventoryTable = () => {
   const { flavours } = useFlavoursContext();
@@ -23,7 +24,12 @@ const InventoryTable = () => {
             <Tdescription>{flavour.stock}</Tdescription>
             <Tdescription>{flavour.local}</Tdescription>
             <Tdescription>
-              <button className="border-b-2 cursor-pointer">Editar</button>
+              <Link
+                href={`/inventario/${flavour._id}`}
+                className="border-b-2 cursor-pointer"
+              >
+                Editar
+              </Link>
             </Tdescription>
           </tr>
         ))}
