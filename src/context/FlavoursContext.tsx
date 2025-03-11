@@ -13,6 +13,7 @@ interface FlavourContext {
   flavours: Flavour[];
   setFlavours: React.Dispatch<React.SetStateAction<Flavour[]>>;
   addFlavour: (flavour: Flavour) => Promise<void>;
+  getWithFilters: (filters: { local: string }) => Promise<void>;
 }
 
 export const flavoursContext = createContext<FlavourContext | null>(null);
@@ -43,8 +44,18 @@ export function FlavoursProvider({ children }: { children: React.ReactNode }) {
     await getFlavours();
   };
 
+  const getWithFilters = async (filters: { local: string }) => {
+    const response = await fetch(
+      `${API_URL}/flavours/filters?local=${filters.local}`
+    );
+    const data = await response.json();
+    setFlavours(data);
+  };
+
   return (
-    <flavoursContext.Provider value={{ flavours, setFlavours, addFlavour }}>
+    <flavoursContext.Provider
+      value={{ flavours, setFlavours, addFlavour, getWithFilters }}
+    >
       {children}
     </flavoursContext.Provider>
   );
