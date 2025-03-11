@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from "react";
 import SummaryArticle from "./SummaryArticle";
 import { useMovementsContext } from "@/hooks/useMovementsContext";
+import CashIcon from "@/icons/CashIcon";
+import MercadoPagoIcon from "@/icons/MercadoPagoIcon";
+import DeliveryIcon from "@/icons/DeliveryIcon";
+import ReceiptIcon from "@/icons/ReceiptIcon";
 
 const MoneySummary = () => {
   const { movements } = useMovementsContext();
@@ -43,22 +47,28 @@ const MoneySummary = () => {
     setTotal_in(total_in);
   }, [movements]);
 
-  console.log(cash, mercado_pago, pedidos_ya, total_out, total_in);
-
   return (
     <section className="flex flex-col md:flex-row w-full gap-4">
       <SummaryArticle
         title="Efectivo"
         price={cash}
         info={`Después de retiros: $${cash - total_out}`}
-      />
-      <SummaryArticle title="Mercado Pago" price={mercado_pago} />
-      <SummaryArticle title="Pedidos Ya" price={pedidos_ya} />
+      >
+        <CashIcon />
+      </SummaryArticle>
+      <SummaryArticle title="Mercado Pago" price={mercado_pago}>
+        <MercadoPagoIcon />
+      </SummaryArticle>
+      <SummaryArticle title="Pedidos Ya" price={pedidos_ya}>
+        <DeliveryIcon />
+      </SummaryArticle>
       <SummaryArticle
         title="Total Ingresos"
         price={total_in}
         info={`Total después de retiros: $${total_in - total_out}`}
-      />
+      >
+        <ReceiptIcon />
+      </SummaryArticle>
     </section>
   );
 };

@@ -1,22 +1,19 @@
 import Header from "@/components/Header";
 import OrdersFilters from "@/components/OrdersFilters";
 import TableOrders from "@/components/TableOrders";
-import Link from "next/link";
+import TitlePages from "@/components/TitlePages";
 
 export default function Home() {
   return (
     <>
       <Header />
       <main className="w-full flex flex-col p-4 gap-4">
-        <section className="flex justify-between">
-          <h1 className="text-4xl font-bold ">Gestión de pedidos</h1>
-          <Link
-            href="/pedidos/crear"
-            className="bg-eerie-black text-snow px-4 py-2 rounded-lg cursor-pointer"
-          >
-            Nuevo pedido
-          </Link>
-        </section>
+        <TitlePages
+          title="Gestión de pedidos"
+          href="/pedidos/crear"
+          button="Nuevo pedido"
+        />
+
         <OrdersFilters />
         <section>
           <TableOrders />

@@ -1,0 +1,28 @@
+import PlusIcon from "@/icons/PlusIcon";
+import Link from "next/link";
+import React from "react";
+
+const TitlePages = ({
+  title,
+  href,
+  button,
+}: {
+  title: string;
+  href: string;
+  button: string;
+}) => {
+  return (
+    <section className="flex justify-between">
+      <h1 className="text-4xl font-bold ">{title}</h1>
+      <Link
+        href={href}
+        className="bg-eerie-black flex gap-2 text-snow px-4 py-2 rounded-lg cursor-pointer"
+      >
+        <PlusIcon />
+        {button}
+      </Link>
+    </section>
+  );
+};
+
+export default TitlePages;
