@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import InventoryTable from "@/components/InventoryTable";
 import Link from "next/link";
 import React from "react";
 
@@ -16,6 +17,7 @@ const page = () => {
             Agregar sabor
           </Link>
         </section>
+        <InventoryTable />
       </main>
     </>
   );
