@@ -16,7 +16,7 @@ const TitlePages = ({
       <h1 className="text-4xl font-bold ">{title}</h1>
       <Link
         href={href}
-        className="bg-eerie-black flex gap-2 text-snow px-4 py-2 rounded-lg cursor-pointer"
+        className="bg-eerie-black flex justify-center items-center gap-2 h-18 md:h-full text-snow px-4 py-2 rounded-lg cursor-pointer"
       >
         <PlusIcon />
         {button}
