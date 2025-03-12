@@ -3,8 +3,15 @@ import Header from "@/components/Header";
 import MoneySummary from "@/components/MoneySummary";
 import TableBox from "@/components/TableBox";
 import TitlePages from "@/components/TitlePages";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function Caja() {
+export default async function Caja() {
+  const verifyCookies = await cookies();
+  const token = verifyCookies.has("auth");
+  if (!token) {
+    redirect("/login");
+  }
   return (
     <>
       <Header />

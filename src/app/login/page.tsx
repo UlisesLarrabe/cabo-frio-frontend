@@ -1,7 +1,14 @@
 import LoginPage from "@/components/LoginPage";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import React from "react";
 
-const page = () => {
+const page = async () => {
+  const verifyCookies = await cookies();
+  const token = verifyCookies.has("auth");
+  if (token) {
+    redirect("/");
+  }
   return <LoginPage />;
 };
 
