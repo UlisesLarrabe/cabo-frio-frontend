@@ -10,6 +10,7 @@ export async function POST(req) {
       name: "auth",
       value: { isLogged: true },
       maxAge: 60 * 60 * 24 * 7,
+      httpOnly: true,
     });
     return Response.json({
       status: 200,
