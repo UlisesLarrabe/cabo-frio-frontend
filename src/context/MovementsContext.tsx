@@ -24,6 +24,7 @@ interface MovementsContextType {
     paymentMethod: string
   ) => Promise<void>;
   postMovement: (movement: Movement) => Promise<void>;
+  allMovements: Movement[];
 }
 
 export const movementsCocntext = createContext<
@@ -32,11 +33,13 @@ export const movementsCocntext = createContext<
 
 export function MovementsProvider({ children }: { children: React.ReactNode }) {
   const [movements, setMovements] = useState<Movement[]>([]);
+  const [allMovements, setAllMovements] = useState<Movement[]>([]);
 
   const getMovements = async () => {
     const response = await fetch(`${API_URL}/movements`);
     const data = await response.json();
     setMovements(data);
+    setAllMovements(data);
   };
 
   const getMovementsWithFilters = async (
@@ -76,6 +79,7 @@ export function MovementsProvider({ children }: { children: React.ReactNode }) {
         getMovements,
         getMovementsWithFilters,
         postMovement,
+        allMovements,
       }}
     >
       {children}
