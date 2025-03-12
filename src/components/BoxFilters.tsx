@@ -89,7 +89,7 @@ const BoxFilters = () => {
       </div>
       <button
         onClick={handleFilter}
-        className="bg-blue-500 text-white p-2 rounded-lg"
+        className="bg-blue-500 text-white p-2 rounded-lg cursor-pointer hover:bg-blue-400"
       >
         Filtrar
       </button>
