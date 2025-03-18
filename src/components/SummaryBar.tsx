@@ -31,7 +31,7 @@ export const SummaryBar = () => {
   }, [movements]);
 
   return (
-    <article className="p-4 border border-gray-300 rounded-lg flex flex-col gap-6 w-1/2 ">
+    <article className="p-4 border border-gray-300 rounded-lg flex flex-col gap-6 md:w-1/2 ">
       <h3 className="text-xl font-bold ">
         Resumen de Ventas por Método de Pago
       </h3>

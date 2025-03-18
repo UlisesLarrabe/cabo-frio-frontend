@@ -4,7 +4,7 @@ import { Shortcuts } from "./Shortcuts";
 
 export const AdditionalInfo = () => {
   return (
-    <section className="flex gap-2 w-full">
+    <section className="flex gap-2 w-full md:flex-row flex-col">
       <SummaryBar />
       <Shortcuts />
     </section>

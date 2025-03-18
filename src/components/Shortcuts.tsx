@@ -3,7 +3,7 @@ import React from "react";
 
 export const Shortcuts = () => {
   return (
-    <article className="p-2 border border-gray-300 rounded-lg flex flex-col gap-6 w-1/2">
+    <article className="p-2 border border-gray-300 rounded-lg flex flex-col gap-6 md:w-1/2">
       <h3 className="font-bold text-xl">Acciones Rápidas</h3>
       <div className="flex flex-col gap-3 w-full">
         <div className="flex gap-2">
