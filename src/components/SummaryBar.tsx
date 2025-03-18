@@ -23,13 +23,16 @@ export const SummaryBar = () => {
   const pedidosYaPercentage = (pedidosYa / mopvementsLength) * 100;
 
   return (
-    <article className="p-4 border border-gray-300 rounded-lg flex flex-col gap-2 w-1/2 ">
+    <article className="p-4 border border-gray-300 rounded-lg flex flex-col gap-6 w-1/2 ">
       <h3 className="text-xl font-bold ">
         Resumen de Ventas por Método de Pago
       </h3>
-      <ProgressInfo title="Efectivo" percentage={cashPercentage} />
-      <ProgressInfo title="Mercado Pago" percentage={mercadoPagoPercentage} />
-      <ProgressInfo title="Pedidos ya" percentage={pedidosYaPercentage} />
+
+      <main className="flex flex-col gap-2">
+        <ProgressInfo title="Efectivo" percentage={cashPercentage} />
+        <ProgressInfo title="Mercado Pago" percentage={mercadoPagoPercentage} />
+        <ProgressInfo title="Pedidos ya" percentage={pedidosYaPercentage} />
+      </main>
     </article>
   );
 };
