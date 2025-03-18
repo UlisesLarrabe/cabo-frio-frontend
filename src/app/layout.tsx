@@ -4,6 +4,7 @@ import "./globals.css";
 import { MovementsProvider } from "@/context/MovementsContext";
 import { OrdersProvider } from "@/context/OrdersContext";
 import { FlavoursProvider } from "@/context/FlavoursContext";
+import Footer from "@/components/Footer";
 
 const onest = Onest({
   variable: "--font-onest",
@@ -25,7 +26,10 @@ export default function RootLayout({
       <OrdersProvider>
         <MovementsProvider>
           <FlavoursProvider>
-            <body className={`${onest.variable} bg-snow `}>{children}</body>
+            <body className={`${onest.variable} bg-snow `}>
+              {children}
+              <Footer />
+            </body>
           </FlavoursProvider>
         </MovementsProvider>
       </OrdersProvider>

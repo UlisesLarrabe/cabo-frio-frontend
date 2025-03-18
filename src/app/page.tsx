@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import { cookies } from "next/headers";
@@ -14,7 +13,6 @@ export default async function Home() {
     <>
       <Header />
       <Hero />
-      <Footer />
     </>
   );
 }
