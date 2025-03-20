@@ -6,6 +6,7 @@ import CashIcon from "@/icons/CashIcon";
 import MercadoPagoIcon from "@/icons/MercadoPagoIcon";
 import DeliveryIcon from "@/icons/DeliveryIcon";
 import ReceiptIcon from "@/icons/ReceiptIcon";
+import RappiIcon from "@/icons/RappiIcon";
 
 const MoneySummary = () => {
   const { movements } = useMovementsContext();
@@ -14,6 +15,8 @@ const MoneySummary = () => {
   const [pedidos_ya, setPedidos_ya] = useState(0);
   const [total_out, setTotal_out] = useState(0);
   const [total_in, setTotal_in] = useState(0);
+  const [rappi, setRappi] = useState(0);
+
   useEffect(() => {
     const cash = movements
       .filter(
@@ -40,6 +43,11 @@ const MoneySummary = () => {
     const total_in = movements
       .filter((movement) => movement.type === "income")
       .reduce((acc, movement) => acc + movement.amount, 0);
+    const rappi = movements
+      .filter((movement) => movement.paymentMethod === "rappi")
+      .reduce((acc, movement) => acc + movement.amount, 0);
+
+    setRappi(rappi);
     setCash(cash);
     setMercado_pago(mercado_pago);
     setPedidos_ya(pedidos_ya);
@@ -61,6 +69,9 @@ const MoneySummary = () => {
       </SummaryArticle>
       <SummaryArticle title="Pedidos Ya" price={pedidos_ya}>
         <DeliveryIcon />
+      </SummaryArticle>
+      <SummaryArticle title="Rappi" price={rappi}>
+        <RappiIcon />
       </SummaryArticle>
       <SummaryArticle
         title="Total Ingresos"

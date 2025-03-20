@@ -6,6 +6,7 @@ import CashIcon from "@/icons/CashIcon";
 import DeliveryIcon from "@/icons/DeliveryIcon";
 import MercadoPagoIcon from "@/icons/MercadoPagoIcon";
 import ReceiptIcon from "@/icons/ReceiptIcon";
+import RappiIcon from "@/icons/RappiIcon";
 
 const HeroSummary = () => {
   const { allMovements: movements } = useMovementsContext();
@@ -25,6 +26,9 @@ const HeroSummary = () => {
     (movement) =>
       movement.paymentMethod === "cash" && movement.type === "income"
   ).length;
+  const rappiQuantity = movements.filter(
+    (movement) => movement.paymentMethod === "rappi"
+  ).length;
 
   return (
     <section className="flex flex-col md:flex-row w-full min-h-28 gap-4">
@@ -34,6 +38,13 @@ const HeroSummary = () => {
         info={`Después de retiros $${total_in - total_out}`}
       >
         <ReceiptIcon />
+      </SummaryArticle>
+      <SummaryArticle
+        title="Ventas totales con Rappi"
+        price={rappiQuantity}
+        isNotPrice={true}
+      >
+        <RappiIcon />
       </SummaryArticle>
       <SummaryArticle
         title="Ventas totales con Pedidos Ya"

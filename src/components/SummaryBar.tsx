@@ -8,6 +8,7 @@ export const SummaryBar = () => {
   const [cashPercentage, setCashPercentage] = useState(0);
   const [mercadoPagoPercentage, setMercadoPagoPercentage] = useState(0);
   const [pedidosYaPercentage, setPedidosYaPercentage] = useState(0);
+  const [rappiPercentage, setRappiPercentage] = useState(0);
 
   useEffect(() => {
     const mopvementsLength = movements.length === 0 ? 1 : movements.length;
@@ -21,13 +22,18 @@ export const SummaryBar = () => {
     const pedidosYa = movements.filter(
       (movement) => movement.paymentMethod === "pedidos_ya"
     ).length;
+    const rappi = movements.filter(
+      (movement) => movement.paymentMethod === "rappi"
+    ).length;
 
     const cashPercentageEffect = (cash / mopvementsLength) * 100;
     const mercadoPagoPercentageEffect = (mercadoPago / mopvementsLength) * 100;
     const pedidosYaPercentageEffect = (pedidosYa / mopvementsLength) * 100;
+    const rappiPercentageEffect = (rappi / mopvementsLength) * 100;
     setCashPercentage(cashPercentageEffect);
     setMercadoPagoPercentage(mercadoPagoPercentageEffect);
     setPedidosYaPercentage(pedidosYaPercentageEffect);
+    setRappiPercentage(rappiPercentageEffect);
   }, [movements]);
 
   return (
@@ -40,6 +46,7 @@ export const SummaryBar = () => {
         <ProgressInfo title="Efectivo" percentage={cashPercentage} />
         <ProgressInfo title="Mercado Pago" percentage={mercadoPagoPercentage} />
         <ProgressInfo title="Pedidos ya" percentage={pedidosYaPercentage} />
+        <ProgressInfo title="Rappi" percentage={rappiPercentage} />
       </main>
     </article>
   );
