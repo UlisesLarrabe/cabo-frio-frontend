@@ -7,6 +7,7 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { Toaster, toast } from "sonner";
 import { useMovementsContext } from "@/hooks/useMovementsContext";
+import PlusIcon from "@/icons/PlusIcon";
 
 interface DescriptionProduct {
   item: string;
@@ -134,9 +135,10 @@ const FormOrders = () => {
         <div className="flex justify-between">
           <h2 className="font-semibold text-xl">Productos</h2>
           <button
-            className="text-eerie-black px-4 py-2 rounded-lg border border-eerie-black cursor-pointer hover:bg-eerie-black hover:text-snow"
+            className="text-eerie-black px-4 py-2 rounded-lg border border-eerie-black cursor-pointer hover:bg-eerie-black hover:text-snow flex gap-2"
             onClick={handleAddProduct}
           >
+            <PlusIcon />
             Agregar producto
           </button>
         </div>
