@@ -79,7 +79,6 @@ const FormOrders = () => {
         toast.error("Error al guardar el pedido");
       }
       response.json().then((data) => {
-        setMovements((prev) => [...prev, data.movement]);
         setOrders((prev) => [...prev, data.order]);
       });
 
