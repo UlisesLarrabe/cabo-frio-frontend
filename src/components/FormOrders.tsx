@@ -30,7 +30,7 @@ const FormOrders = () => {
   const [quantity, setQuantity] = useState(1);
   const [unitType, setUnitType] = useState("kg");
   const { addOrder, setOrders, getOrders } = useOrdersContext();
-  const { getMovements, setMovements } = useMovementsContext();
+  const { getMovements } = useMovementsContext();
   const [loading, setLoading] = useState(false);
 
   const handleAddProduct = (e: React.FormEvent) => {
