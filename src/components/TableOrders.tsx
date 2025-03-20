@@ -6,14 +6,29 @@ import Tdescription from "./Tdescription";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { toast, Toaster } from "sonner";
+import { useMovementsContext } from "@/hooks/useMovementsContext";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const TableOrders = () => {
-  const { orders } = useOrdersContext();
+  const { orders, deleteOrderById } = useOrdersContext();
+  const { getMovements } = useMovementsContext();
+  const handleDeleteOrder = (id: string | undefined) => {
+    if (!id) return;
+    deleteOrderById(id)
+      .then(() => {
+        getMovements();
+        toast.success("Pedido eliminado correctamente");
+      })
+      .catch(() => {
+        toast.error("Error al eliminar el pedido");
+      });
+  };
   return (
     <div className="overflow-x-auto">
+      <Toaster />
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -22,6 +37,7 @@ const TableOrders = () => {
             <TheadBox title="Monto" />
             <TheadBox title="Descripción" />
             <TheadBox title="Local" />
+            <TheadBox title="Acciones" />
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -52,6 +68,14 @@ const TableOrders = () => {
                   ))}
                 </Tdescription>
                 <Tdescription>{orders.local}</Tdescription>
+                <Tdescription>
+                  <button
+                    onClick={() => handleDeleteOrder(orders._id)}
+                    className="bg-red-500 text-white p-2 rounded-lg cursor-pointer hover:bg-red-400"
+                  >
+                    Eliminar
+                  </button>
+                </Tdescription>
               </tr>
             );
           })}

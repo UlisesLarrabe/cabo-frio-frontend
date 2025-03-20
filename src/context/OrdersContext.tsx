@@ -24,6 +24,7 @@ interface OrdersContextType {
   getOrdersByLocal: (local: string) => Promise<void>;
   getOrdersByDate: (date: string) => Promise<void>;
   getByDateAndLocal: (date: string, local: string) => Promise<void>;
+  deleteOrderById: (id: string) => Promise<void>;
 }
 
 export const OrdersContext = createContext<OrdersContextType | undefined>(
@@ -99,6 +100,19 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const deleteOrderById = async (id: string) => {
+    try {
+      const response = await fetch(`${API_URL}/orders/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        getOrders();
+      }
+    } catch {
+      console.error("Error al borrar el pedido");
+    }
+  };
+
   useEffect(() => {
     getOrders();
   }, []);
@@ -112,6 +126,7 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
         getOrdersByLocal,
         getOrdersByDate,
         getByDateAndLocal,
+        deleteOrderById,
       }}
     >
       {children}
