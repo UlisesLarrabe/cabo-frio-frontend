@@ -19,6 +19,7 @@ const FormOrders = () => {
     { placeholder: "Efectivo", value: "cash" },
     { placeholder: "Mercado Pago", value: "mercado_pago" },
     { placeholder: "Pedidos Ya", value: "pedidos_ya" },
+    { placeholder: "Rappi", value: "rappi" },
   ];
 
   const [local, setLocal] = useState(LOCALS[0]);
@@ -55,7 +56,11 @@ const FormOrders = () => {
     const order = {
       local,
       totalPrice,
-      paymentMethod: paymentMethod as "cash" | "mercado_pago" | "pedidos_ya",
+      paymentMethod: paymentMethod as
+        | "cash"
+        | "mercado_pago"
+        | "pedidos_ya"
+        | "rappi",
       description,
       createdAt: nowInBuenosAires,
     };

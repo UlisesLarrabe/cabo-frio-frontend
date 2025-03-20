@@ -35,7 +35,9 @@ const TableBox = () => {
                   ? "Efectivo"
                   : movement.paymentMethod === "mercado_pago"
                   ? "Mercado Pago"
-                  : "Pedidos Ya";
+                  : movement.paymentMethod === "pedidos_ya"
+                  ? "Pedidos Ya"
+                  : "Rappi";
 
               const isIncome = movement.type === "income";
               const incomeColor = isIncome

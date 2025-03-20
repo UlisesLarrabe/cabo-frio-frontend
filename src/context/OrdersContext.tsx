@@ -7,7 +7,7 @@ interface Order {
   _id?: string;
   local: string;
   totalPrice: number;
-  paymentMethod: "cash" | "mercado_pago" | "pedidos_ya";
+  paymentMethod: "cash" | "mercado_pago" | "pedidos_ya" | "rappi";
   description: {
     item: string;
     quantity: number;

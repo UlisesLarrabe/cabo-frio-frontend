@@ -31,7 +31,9 @@ const TableOrders = () => {
                 ? "Efectivo"
                 : orders.paymentMethod === "mercado_pago"
                 ? "Mercado Pago"
-                : "Pedidos Ya";
+                : orders.paymentMethod === "pedidos_ya"
+                ? "Pedidos Ya"
+                : "Rappi";
 
             return (
               <tr key={orders._id}>

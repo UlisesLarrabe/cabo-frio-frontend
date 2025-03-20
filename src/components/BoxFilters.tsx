@@ -70,6 +70,7 @@ const BoxFilters = () => {
           <option value="cash">Efectivo</option>
           <option value="mercado_pago">Mercado Pago</option>
           <option value="pedidos_ya">Pedidos Ya</option>
+          <option value="rappi">Rappi</option>
         </select>
         <label className="text-sm font-semibold" htmlFor="local">
           Local

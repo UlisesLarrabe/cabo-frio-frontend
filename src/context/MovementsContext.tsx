@@ -9,7 +9,7 @@ interface Movement {
   amount: number;
   createdAt: string | dayjs.Dayjs;
   reason?: string;
-  paymentMethod: "cash" | "mercado_pago" | "pedidos_ya";
+  paymentMethod: "cash" | "mercado_pago" | "pedidos_ya" | "rappi";
   local: string;
 }
 
