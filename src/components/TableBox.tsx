@@ -14,7 +14,7 @@ const TableBox = () => {
   const { movements } = useMovementsContext();
 
   return (
-    <div className="p-2 border flex justify-center flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2 w-full md:w-2/3">
+    <div className="p-2 border flex justify-center flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2 w-full md:w-2/3 max-h-[500px] overflow-y-auto">
       <h2 className="font-semibold text-2xl">Movimientos del día</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
