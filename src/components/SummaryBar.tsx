@@ -26,10 +26,18 @@ export const SummaryBar = () => {
       (movement) => movement.paymentMethod === "rappi"
     ).length;
 
-    const cashPercentageEffect = (cash / mopvementsLength) * 100;
-    const mercadoPagoPercentageEffect = (mercadoPago / mopvementsLength) * 100;
-    const pedidosYaPercentageEffect = (pedidosYa / mopvementsLength) * 100;
-    const rappiPercentageEffect = (rappi / mopvementsLength) * 100;
+    const cashPercentageEffect = Number(
+      ((cash / mopvementsLength) * 100).toFixed(2)
+    );
+    const mercadoPagoPercentageEffect = Number(
+      ((mercadoPago / mopvementsLength) * 100).toFixed(2)
+    );
+    const pedidosYaPercentageEffect = Number(
+      ((pedidosYa / mopvementsLength) * 100).toFixed(2)
+    );
+    const rappiPercentageEffect = Number(
+      ((rappi / mopvementsLength) * 100).toFixed(2)
+    );
     setCashPercentage(cashPercentageEffect);
     setMercadoPagoPercentage(mercadoPagoPercentageEffect);
     setPedidosYaPercentage(pedidosYaPercentageEffect);
