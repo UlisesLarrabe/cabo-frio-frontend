@@ -7,14 +7,15 @@ import { toast } from "sonner";
 const FlavourForm = () => {
   const [local, setLocal] = useState(LOCALS[0]);
   const [name, setName] = useState("");
-  const [stock, setStock] = useState(0);
+  const [stock, setStock] = useState<number | null>(0);
   const [loading, setLoading] = useState(false);
-  const isDisabled = loading || !name || !stock;
+  const isDisabled = loading || !name || stock === null;
   const { addFlavour } = useFlavoursContext();
   const handleSubmit = async (e: React.FormEvent) => {
+    if (stock === null) return;
     e.preventDefault();
     setLoading(true);
-    addFlavour({ name, stock, local })
+    addFlavour({ name, stock: Number(stock), local })
       .then(() => {
         setName("");
         setStock(0);
@@ -45,9 +46,10 @@ const FlavourForm = () => {
             type="number"
             placeholder="Stock del sabor"
             className="border border-eerie-black rounded-lg px-4 py-2"
-            onChange={(e) => setStock(Number(e.target.value))}
-            value={stock}
-            min={0}
+            onChange={(e) =>
+              setStock(e.target.value === "" ? null : Number(e.target.value))
+            }
+            value={stock === null ? "" : stock}
           />
         </label>
         <label className="flex flex-col gap-1">
