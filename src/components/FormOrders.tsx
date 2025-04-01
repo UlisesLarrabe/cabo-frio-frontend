@@ -24,7 +24,7 @@ const FormOrders = () => {
   ];
 
   const [local, setLocal] = useState(LOCALS[0]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState<number | null>(0);
   const [paymentMethod, setPaymentMethod] = useState(options[0].value);
   const [description, setDescription] = useState<DescriptionProduct[]>([]);
   const [product, setProduct] = useState("Helado");
@@ -45,18 +45,18 @@ const FormOrders = () => {
     setUnitType("kg");
   };
 
-  const isDisabled = description.length === 0 || totalPrice === 0 || loading;
+  const isDisabled = description.length === 0 || totalPrice === null || loading;
 
   dayjs.extend(utc);
   dayjs.extend(timezone);
 
   const handleSubmit = async (e: React.FormEvent) => {
     const nowInBuenosAires = dayjs().tz("America/Argentina/Buenos_Aires");
-
+    if (totalPrice === null) return;
     e.preventDefault();
     const order = {
       local,
-      totalPrice,
+      totalPrice: Number(totalPrice),
       paymentMethod: paymentMethod as
         | "cash"
         | "mercado_pago"
@@ -189,10 +189,12 @@ const FormOrders = () => {
       <input
         type="number"
         className="p-2 border border-gray-300 rounded-lg"
-        onChange={(e) => setTotalPrice(Number(e.target.value))}
+        onChange={(e) =>
+          setTotalPrice(e.target.value === "" ? null : Number(e.target.value))
+        }
         min={0}
         step={0.1}
-        value={totalPrice}
+        value={totalPrice === null ? "" : totalPrice}
       />
 
       <button
