@@ -11,19 +11,20 @@ dayjs.extend(timezone);
 
 const FormOutcome = () => {
   const [local, setLocal] = useState(LOCALS[0]);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number | null>(0);
   const [reason, setReason] = useState("");
   const [loading, setLoading] = useState(false);
   const { postMovement } = useMovementsContext();
 
-  const isDisabled = amount === 0 || reason === "" || loading;
+  const isDisabled = amount === null || reason === "" || loading;
 
   const handleSubmit = (e: React.FormEvent) => {
+    if (amount === null) return;
     e.preventDefault();
     setLoading(true);
     postMovement({
       local,
-      amount,
+      amount: Number(amount),
       reason,
       type: "outcome",
       paymentMethod: "cash",
@@ -74,8 +75,10 @@ const FormOutcome = () => {
               placeholder="0"
               className="border border-eerie-black rounded-lg p-2"
               min={0}
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
+              value={amount === null ? "" : amount}
+              onChange={(e) =>
+                setAmount(e.target.value === "" ? null : Number(e.target.value))
+              }
             />
           </label>
           <label className="flex flex-col gap-2">
