@@ -15,7 +15,7 @@ const InitializeCash = () => {
   const [amount, setAmount] = useState<number | null>(0);
   const [local, setLocal] = useState(LOCALS[0]);
   const [loading, setLoading] = useState(false);
-  const { postMovement } = useMovementsContext();
+  const { postMovement, getMovements } = useMovementsContext();
 
   const handleSubmit = (e: React.FormEvent) => {
     if (!amount) return;
@@ -27,11 +27,13 @@ const InitializeCash = () => {
       type: "income",
       paymentMethod: "cash",
       createdAt: dayjs().tz("America/Argentina/Buenos_Aires"),
+      reason: "Inicio de caja",
     })
       .then(() => {
         setLoading(false);
         setAmount(0);
         toast.success("Dinero agregado correctamente");
+        getMovements();
       })
       .catch((error) => {
         console.error(error);
