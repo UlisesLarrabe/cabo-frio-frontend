@@ -22,7 +22,13 @@ const InventoryTable = () => {
           {flavours.map((flavour) => (
             <tr key={flavour._id}>
               <Tdescription>{flavour.name}</Tdescription>
-              <Tdescription>{flavour.stock}</Tdescription>
+              <Tdescription>
+                {flavour.stock === 0 ? (
+                  <span className="text-red-500">Sin stock</span>
+                ) : (
+                  flavour.stock
+                )}
+              </Tdescription>
               <Tdescription>{flavour.local}</Tdescription>
               <Tdescription>
                 <Link
