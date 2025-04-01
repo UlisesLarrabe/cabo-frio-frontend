@@ -11,7 +11,7 @@ interface Flavour {
 }
 const EditFlavourForm = ({ flavour }: { flavour: Flavour }) => {
   const [name, setName] = useState(flavour.name);
-  const [stock, setStock] = useState(flavour.stock);
+  const [stock, setStock] = useState<number | null>(flavour.stock);
   const [local, setLocal] = useState(flavour.local);
   const [loading, setLoading] = useState(false);
   const isDisabled = loading || !name || !stock;
@@ -19,7 +19,7 @@ const EditFlavourForm = ({ flavour }: { flavour: Flavour }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    updateFlavour({ _id: flavour._id, name, stock, local })
+    updateFlavour({ _id: flavour._id, name, stock: Number(stock), local })
       .then(() => {
         toast.success("Sabor actualizado correctamente");
       })
@@ -49,8 +49,10 @@ const EditFlavourForm = ({ flavour }: { flavour: Flavour }) => {
             type="number"
             placeholder="Stock del sabor"
             className="border border-eerie-black rounded-lg px-4 py-2"
-            onChange={(e) => setStock(Number(e.target.value))}
-            value={stock}
+            onChange={(e) =>
+              setStock(e.target.value === "" ? null : Number(e.target.value))
+            }
+            value={stock === null ? "" : stock}
             min={0}
           />
         </label>
