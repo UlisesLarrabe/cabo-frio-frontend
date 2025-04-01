@@ -54,6 +54,8 @@ const InitializeCash = () => {
             className="border border-gray-300 rounded-md p-2"
             value={amount || ""}
             onChange={(e) => setAmount(Number(e.target.value))}
+            min={0}
+            placeholder="Monto inicial de caja"
           />
         </label>
         <label className="flex flex-col gap-2">
