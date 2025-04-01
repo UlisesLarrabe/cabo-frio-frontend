@@ -173,11 +173,7 @@ const FormOrders = () => {
                 );
                 if (selectedProduct) {
                   setUnitType(selectedProduct.unit);
-                  if (selectedProduct.unit === "gramos") {
-                    setQuantity(100);
-                  } else {
-                    setQuantity(1);
-                  }
+                  setQuantity(1);
                 }
               }}
             >
@@ -213,7 +209,7 @@ const FormOrders = () => {
               <option value="unidades">unidades</option>
               <option value="3 litros">3 litros</option>
               <option value="5 litros">5 litros</option>
-              <option value="gramos">gramos</option>
+              <option value="10 litros">10 litros</option>
             </select>
           </div>
         </div>
