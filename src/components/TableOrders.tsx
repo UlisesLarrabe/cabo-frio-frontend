@@ -62,8 +62,8 @@ const TableOrders = () => {
                 <Tdescription>
                   {orders.description.map((description, index) => (
                     <p key={index}>
-                      {description.item} - {description.quantity}{" "}
-                      {description.type}
+                      {description.item} - Cantidad: {description.quantity} -
+                      Tipo: {description.type}
                     </p>
                   ))}
                 </Tdescription>
