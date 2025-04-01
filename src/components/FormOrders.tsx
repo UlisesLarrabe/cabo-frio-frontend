@@ -23,13 +23,27 @@ const FormOrders = () => {
     { placeholder: "Rappi", value: "rappi" },
   ];
 
+  const productOptions = [
+    { value: "Helado", unit: "kilo" },
+    { value: "Salsa grande", unit: "unidades" },
+    { value: "Salsa chica", unit: "unidades" },
+    { value: "Pote de litro", unit: "3 litros" },
+    { value: "Bocheros", unit: "unidades" },
+    { value: "Almendrado", unit: "unidades" },
+    { value: "Térmicos", unit: "kilo" },
+    { value: "Cucurucho dulce", unit: "unidades" },
+    { value: "Cucuruchon", unit: "unidades" },
+    { value: "Tacita", unit: "unidades" },
+    { value: "Rocklets", unit: "unidades" },
+  ];
+
   const [local, setLocal] = useState(LOCALS[0]);
   const [totalPrice, setTotalPrice] = useState<number | null>(0);
   const [paymentMethod, setPaymentMethod] = useState(options[0].value);
   const [description, setDescription] = useState<DescriptionProduct[]>([]);
-  const [product, setProduct] = useState("Helado");
+  const [product, setProduct] = useState(productOptions[0].value);
   const [quantity, setQuantity] = useState(1);
-  const [unitType, setUnitType] = useState("kg");
+  const [unitType, setUnitType] = useState(productOptions[0].unit);
   const { addOrder, setOrders, getOrders } = useOrdersContext();
   const { getMovements } = useMovementsContext();
   const [loading, setLoading] = useState(false);
@@ -40,19 +54,23 @@ const FormOrders = () => {
       ...description,
       { item: product, quantity, type: unitType },
     ]);
-    setProduct("Helado");
+    setProduct(productOptions[0].value);
     setQuantity(1);
-    setUnitType("kg");
+    setUnitType(productOptions[0].unit);
   };
 
-  const isDisabled = description.length === 0 || totalPrice === null || loading;
+  const isDisabled =
+    description.length === 0 ||
+    totalPrice === null ||
+    loading ||
+    totalPrice === 0;
 
   dayjs.extend(utc);
   dayjs.extend(timezone);
 
   const handleSubmit = async (e: React.FormEvent) => {
     const nowInBuenosAires = dayjs().tz("America/Argentina/Buenos_Aires");
-    if (totalPrice === null) return;
+
     e.preventDefault();
     const order = {
       local,
@@ -73,9 +91,9 @@ const FormOrders = () => {
         setTotalPrice(0);
         setLocal(LOCALS[0]);
         setPaymentMethod(options[0].value);
-        setProduct("Helado");
+        setProduct(productOptions[0].value);
         setQuantity(1);
-        setUnitType("kg");
+        setUnitType(productOptions[0].unit);
       } else {
         toast.error("Error al guardar el pedido");
       }
@@ -145,13 +163,30 @@ const FormOrders = () => {
         <div className="flex gap-2 w-full">
           <div className="w-1/3 flex flex-col gap-2">
             <label>Producto</label>
-            <input
-              type="text"
-              placeholder="Helado..."
+            <select
               className="p-2 border border-gray-300 rounded-lg"
-              onChange={(e) => setProduct(e.target.value)}
               value={product}
-            />
+              onChange={(e) => {
+                setProduct(e.target.value);
+                const selectedProduct = productOptions.find(
+                  (p) => p.value === e.target.value
+                );
+                if (selectedProduct) {
+                  setUnitType(selectedProduct.unit);
+                  if (selectedProduct.unit === "gramos") {
+                    setQuantity(100);
+                  } else {
+                    setQuantity(1);
+                  }
+                }
+              }}
+            >
+              {productOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.value}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="w-1/3 flex flex-col gap-2">
             <label>Cantidad</label>
@@ -162,17 +197,23 @@ const FormOrders = () => {
               min={1}
               onChange={(e) => setQuantity(Number(e.target.value))}
               value={quantity}
-              step={unitType === "kg" ? 0.1 : 1}
+              step={1}
             />
           </div>
           <div className="w-1/3 flex flex-col gap-2">
             <label>Tipo de unidad</label>
             <select
               className="p-2 border border-gray-300 rounded-lg"
+              value={unitType}
               onChange={(e) => setUnitType(e.target.value)}
             >
-              <option value="kg">Kg</option>
-              <option value="unidades">Unidades</option>
+              <option value="kilo">kilo</option>
+              <option value="medio kilo">medio kilo</option>
+              <option value="un cuarto">un cuarto</option>
+              <option value="unidades">unidades</option>
+              <option value="3 litros">3 litros</option>
+              <option value="5 litros">5 litros</option>
+              <option value="gramos">gramos</option>
             </select>
           </div>
         </div>
