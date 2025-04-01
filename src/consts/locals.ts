@@ -1,1 +1,1 @@
-export const LOCALS = ["Local Wilde", "Local Geril"];
+export const LOCALS = ["Local Wilde", "Local Gerli"];
