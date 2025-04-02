@@ -41,7 +41,7 @@ const TableOrders = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {orders.map((orders) => {
+          {orders.toReversed().map((orders) => {
             const paymentString =
               orders.paymentMethod === "cash"
                 ? "Efectivo"
