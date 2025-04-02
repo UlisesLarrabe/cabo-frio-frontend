@@ -14,7 +14,7 @@ const EditFlavourForm = ({ flavour }: { flavour: Flavour }) => {
   const [stock, setStock] = useState<number | null>(flavour.stock);
   const [local, setLocal] = useState(flavour.local);
   const [loading, setLoading] = useState(false);
-  const isDisabled = loading || !name || !stock;
+  const isDisabled = loading || !name || stock === null;
   const { updateFlavour } = useFlavoursContext();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
