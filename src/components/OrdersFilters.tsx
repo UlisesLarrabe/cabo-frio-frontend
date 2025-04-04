@@ -12,9 +12,11 @@ dayjs.extend(timezone);
 const OrdersFilters = () => {
   const { getOrders, getOrdersByDate, getByDateAndLocal } = useOrdersContext();
   const [local, setLocal] = useState("allLocals");
-  const [date, setDate] = useState(
-    dayjs().tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD")
-  );
+
+  const today = dayjs()
+    .tz("America/Argentina/Buenos_Aires")
+    .format("YYYY-MM-DD");
+  const [date, setDate] = useState(today);
 
   const handleLocalChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "allLocals") {
@@ -45,6 +47,7 @@ const OrdersFilters = () => {
           <label className="text-lg font-medium text-gray-700">Fecha</label>
           <input
             type="date"
+            value={date}
             className="p-2 border  border-gray-300 rounded-lg bg-white text-gray-700 "
             onChange={handleDateChange}
           />
