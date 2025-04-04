@@ -33,9 +33,20 @@ const OrdersFilters = () => {
       .format("YYYY-MM-DD");
     setDate(date);
     if (local === "allLocals") {
-      await getOrdersByDate(date);
+      await getOrdersByDate(
+        dayjs(date)
+          .add(1, "day")
+          .tz("America/Argentina/Buenos_Aires")
+          .format("YYYY-MM-DD")
+      );
     } else {
-      await getByDateAndLocal(date, local);
+      await getByDateAndLocal(
+        dayjs(date)
+          .add(1, "day")
+          .tz("America/Argentina/Buenos_Aires")
+          .format("YYYY-MM-DD"),
+        local
+      );
     }
   };
 

@@ -20,7 +20,15 @@ const BoxFilters = () => {
   const [local, setLocal] = useState(LOCALS[0]);
 
   const handleFilter = async () => {
-    await getMovementsWithFilters(date, local, type, paymentMethod);
+    await getMovementsWithFilters(
+      dayjs(date)
+        .add(1, "day")
+        .tz("America/Argentina/Buenos_Aires")
+        .format("YYYY-MM-DD"),
+      local,
+      type,
+      paymentMethod
+    );
   };
 
   return (
