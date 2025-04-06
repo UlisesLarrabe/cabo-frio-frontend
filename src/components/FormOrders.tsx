@@ -8,6 +8,8 @@ import timezone from "dayjs/plugin/timezone";
 import { Toaster, toast } from "sonner";
 import { useMovementsContext } from "@/hooks/useMovementsContext";
 import PlusIcon from "@/icons/PlusIcon";
+import { CLIENTS } from "@/consts/clients";
+import { paymentsOptions } from "@/consts/paymentsOptions";
 
 interface DescriptionProduct {
   item: string;
@@ -16,12 +18,7 @@ interface DescriptionProduct {
 }
 
 const FormOrders = () => {
-  const options = [
-    { placeholder: "Efectivo", value: "cash" },
-    { placeholder: "Mercado Pago", value: "mercado_pago" },
-    { placeholder: "Pedidos Ya", value: "pedidos_ya" },
-    { placeholder: "Rappi", value: "rappi" },
-  ];
+  const options = paymentsOptions;
 
   const productOptions = [
     { value: "Helado", unit: "kilo" },
@@ -47,6 +44,7 @@ const FormOrders = () => {
   const { addOrder, setOrders, getOrders } = useOrdersContext();
   const { getMovements } = useMovementsContext();
   const [loading, setLoading] = useState(false);
+  const [client, setClient] = useState(CLIENTS[0]);
 
   const handleAddProduct = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,13 +73,10 @@ const FormOrders = () => {
     const order = {
       local,
       totalPrice: Number(totalPrice),
-      paymentMethod: paymentMethod as
-        | "cash"
-        | "mercado_pago"
-        | "pedidos_ya"
-        | "rappi",
+      paymentMethod: paymentMethod as "cash" | "mercado_pago" | "card",
       description,
       createdAt: nowInBuenosAires,
+      client: client,
     };
     setLoading(true);
     addOrder(order).then((response) => {
@@ -94,6 +89,7 @@ const FormOrders = () => {
         setProduct(productOptions[0].value);
         setQuantity(1);
         setUnitType(productOptions[0].unit);
+        setClient(CLIENTS[0]);
       } else {
         toast.error("Error al guardar el pedido");
       }
@@ -117,9 +113,7 @@ const FormOrders = () => {
 
       <div className="flex gap-4 w-full">
         <div className="flex flex-col gap-4 w-1/2">
-          <label htmlFor="cliente" className="font-semibold text-xl">
-            Local
-          </label>
+          <label className="font-semibold text-xl">Local</label>
           <select
             id="local"
             name="local"
@@ -129,6 +123,26 @@ const FormOrders = () => {
             {LOCALS.map((local) => (
               <option key={local} value={local}>
                 {local}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="client" className="font-semibold text-xl">
+            Cliente
+          </label>
+          <select
+            id="client"
+            name="client"
+            className="p-2 border border-gray-300 rounded-lg"
+            value={client.value}
+            onChange={(e) =>
+              setClient(
+                CLIENTS.find((c) => c.value === e.target.value) || CLIENTS[0]
+              )
+            }
+          >
+            {CLIENTS.map((client) => (
+              <option key={client.value} value={client.value}>
+                {client.name}
               </option>
             ))}
           </select>

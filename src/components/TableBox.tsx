@@ -22,6 +22,7 @@ const TableBox = () => {
             <tr>
               <TheadBox title="Hora" />
               <TheadBox title="Tipo" />
+              <TheadBox title="Cliente" />
               <TheadBox title="Método" />
               <TheadBox title="Monto" />
               <TheadBox title="Descripción" />
@@ -35,9 +36,7 @@ const TableBox = () => {
                   ? "Efectivo"
                   : movement.paymentMethod === "mercado_pago"
                   ? "Mercado Pago"
-                  : movement.paymentMethod === "pedidos_ya"
-                  ? "Pedidos Ya"
-                  : "Rappi";
+                  : "Tarjeta";
 
               const isIncome = movement.type === "income";
               const incomeColor = isIncome
@@ -55,6 +54,7 @@ const TableBox = () => {
                       {movement.type === "income" ? "Ingreso" : "Egreso"}
                     </span>
                   </Tdescription>
+                  <Tdescription>{movement.client?.name}</Tdescription>
                   <Tdescription>{paymentString}</Tdescription>
                   <Tdescription>${movement.amount}</Tdescription>
                   <Tdescription>{movement.reason}</Tdescription>

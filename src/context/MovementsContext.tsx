@@ -1,5 +1,7 @@
 "use client";
 import { API_URL } from "@/consts/api_url";
+import { Client } from "@/consts/clients";
+import { payments } from "@/consts/paymentsOptions";
 import dayjs from "dayjs";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -9,8 +11,9 @@ interface Movement {
   amount: number;
   createdAt: string | dayjs.Dayjs;
   reason?: string;
-  paymentMethod: "cash" | "mercado_pago" | "pedidos_ya" | "rappi";
+  paymentMethod: payments;
   local: string;
+  client: Client;
 }
 
 interface MovementsContextType {

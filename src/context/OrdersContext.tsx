@@ -2,18 +2,20 @@
 import { API_URL } from "@/consts/api_url";
 import { Dayjs } from "dayjs";
 import { createContext, useEffect, useState } from "react";
+import { type Client } from "@/consts/clients";
 
 interface Order {
   _id?: string;
   local: string;
   totalPrice: number;
-  paymentMethod: "cash" | "mercado_pago" | "pedidos_ya" | "rappi";
+  paymentMethod: "cash" | "mercado_pago" | "card";
   description: {
     item: string;
     quantity: number;
     type: string;
   }[];
   createdAt: Dayjs;
+  client: Client;
 }
 
 interface OrdersContextType {

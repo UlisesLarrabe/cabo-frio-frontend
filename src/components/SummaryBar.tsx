@@ -7,11 +7,10 @@ export const SummaryBar = () => {
   const { movements } = useMovementsContext();
   const [cashPercentage, setCashPercentage] = useState(0);
   const [mercadoPagoPercentage, setMercadoPagoPercentage] = useState(0);
-  const [pedidosYaPercentage, setPedidosYaPercentage] = useState(0);
-  const [rappiPercentage, setRappiPercentage] = useState(0);
+  const [cardPercentage, setCardPercentage] = useState(0);
 
   useEffect(() => {
-    const mopvementsLength = movements.length === 0 ? 1 : movements.length;
+    const movementsLength = movements.length === 0 ? 1 : movements.length;
 
     const cash = movements.filter(
       (movement) => movement.paymentMethod === "cash"
@@ -19,29 +18,24 @@ export const SummaryBar = () => {
     const mercadoPago = movements.filter(
       (movement) => movement.paymentMethod === "mercado_pago"
     ).length;
-    const pedidosYa = movements.filter(
-      (movement) => movement.paymentMethod === "pedidos_ya"
-    ).length;
-    const rappi = movements.filter(
-      (movement) => movement.paymentMethod === "rappi"
-    ).length;
 
     const cashPercentageEffect = Number(
-      ((cash / mopvementsLength) * 100).toFixed(2)
+      ((cash / movementsLength) * 100).toFixed(1)
     );
     const mercadoPagoPercentageEffect = Number(
-      ((mercadoPago / mopvementsLength) * 100).toFixed(2)
+      ((mercadoPago / movementsLength) * 100).toFixed(1)
     );
-    const pedidosYaPercentageEffect = Number(
-      ((pedidosYa / mopvementsLength) * 100).toFixed(2)
+
+    const card = movements.filter(
+      (movement) => movement.paymentMethod === "card"
+    ).length;
+    const cardPercentageEffect = Number(
+      ((card / movementsLength) * 100).toFixed(1)
     );
-    const rappiPercentageEffect = Number(
-      ((rappi / mopvementsLength) * 100).toFixed(2)
-    );
+
     setCashPercentage(cashPercentageEffect);
     setMercadoPagoPercentage(mercadoPagoPercentageEffect);
-    setPedidosYaPercentage(pedidosYaPercentageEffect);
-    setRappiPercentage(rappiPercentageEffect);
+    setCardPercentage(cardPercentageEffect);
   }, [movements]);
 
   return (
@@ -53,8 +47,7 @@ export const SummaryBar = () => {
       <main className="flex flex-col gap-2">
         <ProgressInfo title="Efectivo" percentage={cashPercentage} />
         <ProgressInfo title="Mercado Pago" percentage={mercadoPagoPercentage} />
-        <ProgressInfo title="Pedidos ya" percentage={pedidosYaPercentage} />
-        <ProgressInfo title="Rappi" percentage={rappiPercentage} />
+        <ProgressInfo title="Tarjeta" percentage={cardPercentage} />
       </main>
     </article>
   );

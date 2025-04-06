@@ -5,6 +5,7 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { LOCALS } from "@/consts/locals";
 import { useMovementsContext } from "@/hooks/useMovementsContext";
+import { paymentsOptions } from "@/consts/paymentsOptions";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -75,10 +76,11 @@ const BoxFilters = () => {
           onChange={(e) => setPaymentMethod(e.target.value)}
         >
           <option value="all">Todos</option>
-          <option value="cash">Efectivo</option>
-          <option value="mercado_pago">Mercado Pago</option>
-          <option value="pedidos_ya">Pedidos Ya</option>
-          <option value="rappi">Rappi</option>
+          {paymentsOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.placeholder}
+            </option>
+          ))}
         </select>
         <label className="text-sm font-semibold" htmlFor="local">
           Local

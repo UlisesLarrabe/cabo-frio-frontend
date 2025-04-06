@@ -4,18 +4,16 @@ import SummaryArticle from "./SummaryArticle";
 import { useMovementsContext } from "@/hooks/useMovementsContext";
 import CashIcon from "@/icons/CashIcon";
 import MercadoPagoIcon from "@/icons/MercadoPagoIcon";
-import DeliveryIcon from "@/icons/DeliveryIcon";
 import ReceiptIcon from "@/icons/ReceiptIcon";
-import RappiIcon from "@/icons/RappiIcon";
+import CardIcon from "@/icons/CardIcon";
 
 const MoneySummary = () => {
   const { movements } = useMovementsContext();
   const [cash, setCash] = useState(0);
   const [mercado_pago, setMercado_pago] = useState(0);
-  const [pedidos_ya, setPedidos_ya] = useState(0);
+  const [card, setCard] = useState(0);
   const [total_out, setTotal_out] = useState(0);
   const [total_in, setTotal_in] = useState(0);
-  const [rappi, setRappi] = useState(0);
 
   useEffect(() => {
     const cash = movements
@@ -31,26 +29,24 @@ const MoneySummary = () => {
           movement.paymentMethod === "mercado_pago"
       )
       .reduce((acc, movement) => acc + movement.amount, 0);
-    const pedidos_ya = movements
+
+    const card = movements
       .filter(
         (movement) =>
-          movement.type === "income" && movement.paymentMethod === "pedidos_ya"
+          movement.type === "income" && movement.paymentMethod === "card"
       )
       .reduce((acc, movement) => acc + movement.amount, 0);
+
     const total_out = movements
       .filter((movement) => movement.type === "outcome")
       .reduce((acc, movement) => acc + movement.amount, 0);
     const total_in = movements
       .filter((movement) => movement.type === "income")
       .reduce((acc, movement) => acc + movement.amount, 0);
-    const rappi = movements
-      .filter((movement) => movement.paymentMethod === "rappi")
-      .reduce((acc, movement) => acc + movement.amount, 0);
 
-    setRappi(rappi);
     setCash(cash);
     setMercado_pago(mercado_pago);
-    setPedidos_ya(pedidos_ya);
+    setCard(card);
     setTotal_out(total_out);
     setTotal_in(total_in);
   }, [movements]);
@@ -67,11 +63,8 @@ const MoneySummary = () => {
       <SummaryArticle title="Mercado Pago" price={mercado_pago}>
         <MercadoPagoIcon />
       </SummaryArticle>
-      <SummaryArticle title="Pedidos Ya" price={pedidos_ya}>
-        <DeliveryIcon />
-      </SummaryArticle>
-      <SummaryArticle title="Rappi" price={rappi}>
-        <RappiIcon />
+      <SummaryArticle title="Tarjeta" price={card}>
+        <CardIcon />
       </SummaryArticle>
       <SummaryArticle
         title="Total Ingresos"

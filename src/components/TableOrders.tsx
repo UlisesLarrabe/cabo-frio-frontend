@@ -37,6 +37,7 @@ const TableOrders = () => {
             <TheadBox title="Monto" />
             <TheadBox title="Descripción" />
             <TheadBox title="Local" />
+            <TheadBox title="Cliente" />
             <TheadBox title="Acciones" />
           </tr>
         </thead>
@@ -47,9 +48,7 @@ const TableOrders = () => {
                 ? "Efectivo"
                 : orders.paymentMethod === "mercado_pago"
                 ? "Mercado Pago"
-                : orders.paymentMethod === "pedidos_ya"
-                ? "Pedidos Ya"
-                : "Rappi";
+                : "Tarjeta";
 
             return (
               <tr key={orders._id}>
@@ -68,6 +67,7 @@ const TableOrders = () => {
                   ))}
                 </Tdescription>
                 <Tdescription>{orders.local}</Tdescription>
+                <Tdescription>{orders.client?.name}</Tdescription>
                 <Tdescription>
                   <button
                     onClick={() => handleDeleteOrder(orders._id)}

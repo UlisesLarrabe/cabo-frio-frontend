@@ -3,10 +3,9 @@ import { useMovementsContext } from "@/hooks/useMovementsContext";
 import React from "react";
 import SummaryArticle from "./SummaryArticle";
 import CashIcon from "@/icons/CashIcon";
-import DeliveryIcon from "@/icons/DeliveryIcon";
 import MercadoPagoIcon from "@/icons/MercadoPagoIcon";
 import ReceiptIcon from "@/icons/ReceiptIcon";
-import RappiIcon from "@/icons/RappiIcon";
+import CardIcon from "@/icons/CardIcon";
 
 const HeroSummary = () => {
   const { allMovements: movements } = useMovementsContext();
@@ -16,9 +15,7 @@ const HeroSummary = () => {
   const total_in = movements
     .filter((movement) => movement.type === "income")
     .reduce((acc, movement) => acc + movement.amount, 0);
-  const pedidosYaQuantity = movements.filter(
-    (movement) => movement.paymentMethod === "pedidos_ya"
-  ).length;
+
   const mercadopagoQuantity = movements.filter(
     (movement) => movement.paymentMethod === "mercado_pago"
   ).length;
@@ -26,8 +23,10 @@ const HeroSummary = () => {
     (movement) =>
       movement.paymentMethod === "cash" && movement.type === "income"
   ).length;
-  const rappiQuantity = movements.filter(
-    (movement) => movement.paymentMethod === "rappi"
+
+  const cardQuantity = movements.filter(
+    (movement) =>
+      movement.paymentMethod === "card" && movement.type === "income"
   ).length;
 
   return (
@@ -39,20 +38,7 @@ const HeroSummary = () => {
       >
         <ReceiptIcon />
       </SummaryArticle>
-      <SummaryArticle
-        title="Ventas totales con Rappi"
-        price={rappiQuantity}
-        isNotPrice={true}
-      >
-        <RappiIcon />
-      </SummaryArticle>
-      <SummaryArticle
-        title="Ventas totales con Pedidos Ya"
-        price={pedidosYaQuantity}
-        isNotPrice={true}
-      >
-        <DeliveryIcon />
-      </SummaryArticle>
+
       <SummaryArticle
         title="Ventas totales con Mercado Pago"
         price={mercadopagoQuantity}
@@ -66,6 +52,14 @@ const HeroSummary = () => {
         isNotPrice={true}
       >
         <CashIcon />
+      </SummaryArticle>
+
+      <SummaryArticle
+        title="Ventas totales con tarjeta"
+        price={cardQuantity}
+        isNotPrice={true}
+      >
+        <CardIcon />
       </SummaryArticle>
     </section>
   );
