@@ -29,6 +29,10 @@ const FormOutcome = () => {
       type: "outcome",
       paymentMethod: "cash",
       createdAt: dayjs().tz("America/Argentina/Buenos_Aires"),
+      client: {
+        name: "Local",
+        value: "local",
+      },
     })
       .then(() => {
         setLoading(false);
