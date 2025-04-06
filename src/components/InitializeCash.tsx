@@ -28,6 +28,10 @@ const InitializeCash = () => {
       paymentMethod: "cash",
       createdAt: dayjs().tz("America/Argentina/Buenos_Aires"),
       reason: "Inicio de caja",
+      client: {
+        name: "Local",
+        value: "local",
+      },
     })
       .then(() => {
         setLoading(false);
