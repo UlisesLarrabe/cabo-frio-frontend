@@ -1,12 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import { toast, Toaster } from "sonner";
+import CookieBanner from "./CookieBanner";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const isDisabled = email.trim() === "" || password.trim() === "" || loading;
+  const [hasAcceptedCookies, setHasAcceptedCookies] = useState(false);
+
+  const isDisabled =
+    !hasAcceptedCookies ||
+    email.trim() === "" ||
+    password.trim() === "" ||
+    loading;
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -35,6 +42,8 @@ const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <CookieBanner setHasAcceptedCookies={setHasAcceptedCookies} />
+
       <Toaster />
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-900">
