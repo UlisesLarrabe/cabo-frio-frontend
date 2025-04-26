@@ -7,8 +7,8 @@ interface Flavour {
   name: string;
   stock: number;
   local: string;
+  refrigerator?: string;
 }
-
 interface FlavourContext {
   flavours: Flavour[];
   setFlavours: React.Dispatch<React.SetStateAction<Flavour[]>>;
