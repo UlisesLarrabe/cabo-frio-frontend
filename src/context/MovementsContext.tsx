@@ -28,6 +28,8 @@ interface MovementsContextType {
   ) => Promise<void>;
   postMovement: (movement: Movement) => Promise<void>;
   allMovements: Movement[];
+  getMonthMovements: (month: string) => Promise<void>;
+  monthMovements: Movement[];
 }
 
 export const movementsCocntext = createContext<
@@ -37,12 +39,19 @@ export const movementsCocntext = createContext<
 export function MovementsProvider({ children }: { children: React.ReactNode }) {
   const [movements, setMovements] = useState<Movement[]>([]);
   const [allMovements, setAllMovements] = useState<Movement[]>([]);
+  const [monthMovements, setMonthMovements] = useState<Movement[]>([]);
 
   const getMovements = async () => {
     const response = await fetch(`${API_URL}/movements`);
     const data = await response.json();
     setMovements(data);
     setAllMovements(data);
+  };
+
+  const getMonthMovements = async (month: string) => {
+    const response = await fetch(`${API_URL}/movements/month/${month}`);
+    const data = await response.json();
+    setMonthMovements(data);
   };
 
   const getMovementsWithFilters = async (
@@ -83,6 +92,8 @@ export function MovementsProvider({ children }: { children: React.ReactNode }) {
         getMovementsWithFilters,
         postMovement,
         allMovements,
+        getMonthMovements,
+        monthMovements,
       }}
     >
       {children}
