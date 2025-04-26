@@ -1,5 +1,5 @@
-export async function POST(req: { json: () => Promise<any> }) {
-  const body = await req.json();
+export async function POST(req: Request) {
+  const body: { password: string } = await req.json();
   const passwordRequired = process.env.RESUME_PASSWORD;
   if (body.password === passwordRequired) {
     return Response.json({
