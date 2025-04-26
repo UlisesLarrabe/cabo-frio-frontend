@@ -1,25 +1,40 @@
 "use client";
 import { LOCALS } from "@/consts/locals";
+import { REFRIGERATORS_INFO } from "@/consts/refrigerators";
 import { useFlavoursContext } from "@/hooks/useFlavoursContext";
 import React, { useState } from "react";
 import { toast, Toaster } from "sonner";
+
 interface Flavour {
   _id?: number;
   name: string;
   stock: number;
   local: string;
+  refrigerator: string;
 }
+
 const EditFlavourForm = ({ flavour }: { flavour: Flavour }) => {
   const [name, setName] = useState(flavour.name);
   const [stock, setStock] = useState<number | null>(flavour.stock);
   const [local, setLocal] = useState(flavour.local);
+  const [refrigerator, setRefrigerator] = useState<string>(
+    flavour.refrigerator || REFRIGERATORS_INFO[0].value
+  );
   const [loading, setLoading] = useState(false);
   const isDisabled = loading || !name || stock === null;
+
   const { updateFlavour } = useFlavoursContext();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    updateFlavour({ _id: flavour._id, name, stock: Number(stock), local })
+    updateFlavour({
+      _id: flavour._id,
+      name,
+      stock: Number(stock),
+      local,
+      refrigerator,
+    })
       .then(() => {
         toast.success("Sabor actualizado correctamente");
       })
@@ -28,6 +43,7 @@ const EditFlavourForm = ({ flavour }: { flavour: Flavour }) => {
       });
     setLoading(false);
   };
+
   return (
     <section className="flex flex-col gap-4 justify-center items-center">
       <Toaster />
@@ -68,6 +84,20 @@ const EditFlavourForm = ({ flavour }: { flavour: Flavour }) => {
             {LOCALS.map((local) => (
               <option key={local} value={local}>
                 {local}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex flex-col gap-1">
+          <span>Categoría de freezer</span>
+          <select
+            className="border border-eerie-black rounded-lg px-4 py-2"
+            value={refrigerator}
+            onChange={(e) => setRefrigerator(e.target.value)}
+          >
+            {REFRIGERATORS_INFO.map((cat) => (
+              <option key={cat.value} value={cat.value}>
+                {cat.title}
               </option>
             ))}
           </select>

@@ -1,5 +1,6 @@
 "use client";
 import { LOCALS } from "@/consts/locals";
+import { REFRIGERATORS_INFO } from "@/consts/refrigerators";
 import { useFlavoursContext } from "@/hooks/useFlavoursContext";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -9,13 +10,19 @@ const FlavourForm = () => {
   const [name, setName] = useState("");
   const [stock, setStock] = useState<number | null>(0);
   const [loading, setLoading] = useState(false);
+  const [refrigerator, setRefrigerator] = useState(REFRIGERATORS_INFO[0].value);
   const isDisabled = loading || !name || stock === null;
   const { addFlavour } = useFlavoursContext();
   const handleSubmit = async (e: React.FormEvent) => {
     if (stock === null) return;
     e.preventDefault();
     setLoading(true);
-    addFlavour({ name, stock: Number(stock), local })
+    addFlavour({
+      name,
+      stock: Number(stock),
+      local,
+      refrigerator,
+    })
       .then(() => {
         setName("");
         setStock(0);
@@ -64,6 +71,20 @@ const FlavourForm = () => {
             {LOCALS.map((local) => (
               <option key={local} value={local}>
                 {local}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex flex-col gap-1">
+          <span>Categoría de freezer</span>
+          <select
+            className="border border-eerie-black rounded-lg px-4 py-2"
+            value={refrigerator}
+            onChange={(e) => setRefrigerator(e.target.value)}
+          >
+            {REFRIGERATORS_INFO.map((cat) => (
+              <option key={cat.value} value={cat.value}>
+                {cat.title}
               </option>
             ))}
           </select>
