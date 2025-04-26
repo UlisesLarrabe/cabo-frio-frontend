@@ -41,6 +41,9 @@ const FormOrders = () => {
   const [product, setProduct] = useState(productOptions[0].value);
   const [quantity, setQuantity] = useState(1);
   const [unitType, setUnitType] = useState(productOptions[0].unit);
+  const [createdAt, setCreatedAt] = useState(
+    dayjs().tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DDTHH:mm")
+  );
   const { addOrder, setOrders, getOrders } = useOrdersContext();
   const { getMovements } = useMovementsContext();
   const [loading, setLoading] = useState(false);
@@ -67,15 +70,17 @@ const FormOrders = () => {
   dayjs.extend(timezone);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    const nowInBuenosAires = dayjs().tz("America/Argentina/Buenos_Aires");
-
     e.preventDefault();
+    const nowInBuenosAires = dayjs().tz("America/Argentina/Buenos_Aires");
+    const usedDate = createdAt
+      ? dayjs.tz(createdAt, "America/Argentina/Buenos_Aires").add(1, "day")
+      : nowInBuenosAires.add(1, "day");
     const order = {
       local,
       totalPrice: Number(totalPrice),
       paymentMethod: paymentMethod as "cash" | "mercado_pago" | "card",
       description,
-      createdAt: nowInBuenosAires,
+      createdAt: usedDate,
       client: client,
     };
     setLoading(true);
@@ -90,6 +95,11 @@ const FormOrders = () => {
         setQuantity(1);
         setUnitType(productOptions[0].unit);
         setClient(CLIENTS[0]);
+        setCreatedAt(
+          dayjs()
+            .tz("America/Argentina/Buenos_Aires")
+            .format("YYYY-MM-DDTHH:mm")
+        );
       } else {
         toast.error("Error al guardar el pedido");
       }
@@ -146,6 +156,20 @@ const FormOrders = () => {
               </option>
             ))}
           </select>
+          <label htmlFor="createdAt" className="font-semibold text-xl mt-2">
+            Fecha y hora del pedido (opcional)
+          </label>
+          <input
+            type="datetime-local"
+            id="createdAt"
+            name="createdAt"
+            className="p-2 border border-gray-300 rounded-lg"
+            value={createdAt}
+            onChange={(e) => setCreatedAt(e.target.value)}
+            max={dayjs()
+              .tz("America/Argentina/Buenos_Aires")
+              .format("YYYY-MM-DDTHH:mm")}
+          />
         </div>
         <div className="flex flex-col gap-2  w-1/2">
           <span className="font-semibold text-xl">Método de pago</span>
