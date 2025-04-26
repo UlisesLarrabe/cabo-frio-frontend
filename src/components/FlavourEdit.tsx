@@ -8,6 +8,7 @@ interface Flavour {
   name: string;
   stock: number;
   local: string;
+  refrigerator: string;
 }
 const FlavourEdit = ({ flavour }: { flavour: Flavour }) => {
   return (
