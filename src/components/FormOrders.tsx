@@ -73,7 +73,7 @@ const FormOrders = () => {
     e.preventDefault();
     const nowInBuenosAires = dayjs().tz("America/Argentina/Buenos_Aires");
     const usedDate = createdAt
-      ? dayjs.tz(createdAt, "America/Argentina/Buenos_Aires").add(1, "day")
+      ? dayjs.tz(createdAt, "America/Argentina/Buenos_Aires")
       : nowInBuenosAires.add(1, "day");
     const order = {
       local,
