@@ -19,7 +19,7 @@ const ChartFilters = () => {
 
   const handleFilter = async (e: React.FormEvent) => {
     e.preventDefault();
-    const monthSelected = dayjs(month).format("MM");
+    const monthSelected = dayjs(month).add(1, "month").format("MM");
     await getMonthMovements(monthSelected, local);
   };
 
