@@ -47,7 +47,7 @@ const MonthSummary = () => {
   }, []);
 
   return (
-    <section className="flex flex-col md:flex-row w-full gap-4">
+    <section className="flex flex-col md:flex-row w-full gap-6 justify-center items-center">
       <SummaryArticle title="Efectivo" price={total_cash}>
         <CashIcon />
       </SummaryArticle>

@@ -16,7 +16,7 @@ const ResumePasswordForm: React.FC<ResumePasswordFormProps> = ({
   const { getMonthMovements } = useMovementsContext();
 
   useEffect(() => {
-    getMonthMovements(dayjs().add(1, "month").get("month").toString());
+    getMonthMovements(dayjs().add(1, "month").get("month").toString(), "all");
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -8,19 +8,21 @@ const TitlePages = ({
   button,
 }: {
   title: string;
-  href: string;
-  button: string;
+  href?: string;
+  button?: string;
 }) => {
   return (
     <section className="flex justify-between">
       <h1 className="text-4xl font-bold ">{title}</h1>
-      <Link
-        href={href}
-        className="bg-eerie-black flex justify-center items-center gap-2 h-18 md:h-full text-snow px-4 py-2 rounded-lg cursor-pointer"
-      >
-        <PlusIcon />
-        {button}
-      </Link>
+      {href && button && (
+        <Link
+          href={href}
+          className="bg-eerie-black flex justify-center items-center gap-2 h-18 md:h-full text-snow px-4 py-2 rounded-lg cursor-pointer"
+        >
+          <PlusIcon />
+          {button}
+        </Link>
+      )}
     </section>
   );
 };

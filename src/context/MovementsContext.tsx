@@ -28,7 +28,7 @@ interface MovementsContextType {
   ) => Promise<void>;
   postMovement: (movement: Movement) => Promise<void>;
   allMovements: Movement[];
-  getMonthMovements: (month: string) => Promise<void>;
+  getMonthMovements: (month: string, local: string) => Promise<void>;
   monthMovements: Movement[];
 }
 
@@ -48,10 +48,21 @@ export function MovementsProvider({ children }: { children: React.ReactNode }) {
     setAllMovements(data);
   };
 
-  const getMonthMovements = async (month: string) => {
+  const getMonthMovements = async (month: string, local: string) => {
     const response = await fetch(`${API_URL}/movements/month/${month}`);
     const data = await response.json();
-    setMonthMovements(data);
+    if (data.length === 0) {
+      setMonthMovements([]);
+      return;
+    }
+    if (local === "all") {
+      setMonthMovements(data);
+    } else {
+      const filteredData = data.filter(
+        (movement: Movement) => movement.local === local
+      );
+      setMonthMovements(filteredData);
+    }
   };
 
   const getMovementsWithFilters = async (
