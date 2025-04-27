@@ -14,7 +14,7 @@ const SummaryArticle = ({
   isNotPrice?: boolean;
 }) => {
   return (
-    <article className=" p-4 border border-gray-300 rounded-md md:w-1/4 ">
+    <article className="w-full p-4 border border-gray-300 rounded-md md:w-1/4 ">
       <div className="flex justify-between">
         <h3>{title}</h3>
         {children}

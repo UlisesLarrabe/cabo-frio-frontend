@@ -11,7 +11,7 @@ const ResumeProtectedContent = () => (
     </div>
     <section className="w-full max-w-4xl flex flex-col gap-8">
       <MonthSummary />
-      <div className="flex gap-8">
+      <div className="flex gap-8 md:flex-row flex-col">
         <ChartResume />
         <ChartFilters />
       </div>

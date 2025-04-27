@@ -24,7 +24,7 @@ const ChartFilters = () => {
 
   return (
     <form
-      className="p-2 border flex flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2 w-1/2  bg-white shadow"
+      className="p-2 border flex flex-col border-gray-300 rounded-lg min-w-3xs min-h-32 gap-2 md:w-1/2  bg-white shadow"
       onSubmit={handleFilter}
     >
       <h2 className="text-2xl font-semibold">Filtros</h2>

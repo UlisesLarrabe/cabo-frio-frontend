@@ -34,6 +34,11 @@ const Header = () => {
             Caja
           </Link>
         </li>
+        <li>
+          <Link href="/resumen" className={linkClass("/resumen")}>
+            Resumen
+          </Link>
+        </li>
       </ul>
     </nav>
   );
