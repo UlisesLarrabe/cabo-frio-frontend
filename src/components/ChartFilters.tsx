@@ -12,14 +12,15 @@ dayjs.extend(timezone);
 const ChartFilters = () => {
   const currentMonth = dayjs()
     .tz("America/Argentina/Buenos_Aires")
-    .format("MM");
+    .format("YYYY-MM");
   const [month, setMonth] = useState(currentMonth);
   const [local, setLocal] = useState("all");
   const { getMonthMovements } = useMovementsContext();
 
   const handleFilter = async (e: React.FormEvent) => {
     e.preventDefault();
-    await getMonthMovements(month, local);
+    const monthSelected = dayjs(month).format("MM");
+    await getMonthMovements(monthSelected, local);
   };
 
   return (
@@ -42,7 +43,7 @@ const ChartFilters = () => {
             setMonth(
               dayjs(e.target.value)
                 .tz("America/Argentina/Buenos_Aires")
-                .format("MM")
+                .format("YYYY-MM")
             )
           }
         />

@@ -44,7 +44,7 @@ const MonthSummary = () => {
     setTotal_card(TOTAL_CARD);
     setTotal_mp(TOTAL_MP);
     setTotal_income(TOTAL_INCOME);
-  }, []);
+  }, [monthMovements]);
 
   return (
     <section className="flex flex-col md:flex-row w-full gap-6 justify-center items-center">
