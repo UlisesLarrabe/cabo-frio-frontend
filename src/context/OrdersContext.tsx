@@ -1,8 +1,13 @@
 "use client";
 import { API_URL } from "@/consts/api_url";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { createContext, useEffect, useState } from "react";
 import { type Client } from "@/consts/clients";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface Order {
   _id?: string;
@@ -64,9 +69,11 @@ export function OrdersProvider({ children }: { children: React.ReactNode }) {
 
   const getOrders = async () => {
     try {
-      const response = await fetch(`${API_URL}/orders`);
-      const data = await response.json();
-      setOrders(data);
+      const today = dayjs()
+        .add(1, "day")
+        .tz("America/Argentina/Buenos_Aires")
+        .format("YYYY-MM-DD");
+      await getOrdersByDate(today);
     } catch {
       console.error("Error al traer los pedidos");
     }
