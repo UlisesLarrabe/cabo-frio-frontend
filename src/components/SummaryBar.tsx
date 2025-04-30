@@ -4,7 +4,7 @@ import ProgressInfo from "./ProgressInfo";
 import { useMovementsContext } from "@/hooks/useMovementsContext";
 
 export const SummaryBar = () => {
-  const { movements } = useMovementsContext();
+  const { allMovements: movements } = useMovementsContext();
   const [cashPercentage, setCashPercentage] = useState(0);
   const [mercadoPagoPercentage, setMercadoPagoPercentage] = useState(0);
   const [cardPercentage, setCardPercentage] = useState(0);

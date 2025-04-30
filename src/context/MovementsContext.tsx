@@ -4,6 +4,11 @@ import { Client } from "@/consts/clients";
 import { payments } from "@/consts/paymentsOptions";
 import dayjs from "dayjs";
 import React, { createContext, useEffect, useState } from "react";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface Movement {
   _id?: string;
@@ -42,7 +47,11 @@ export function MovementsProvider({ children }: { children: React.ReactNode }) {
   const [monthMovements, setMonthMovements] = useState<Movement[]>([]);
 
   const getMovements = async () => {
-    const response = await fetch(`${API_URL}/movements`);
+    const today = dayjs()
+      .add(1, "day")
+      .tz("America/Argentina/Buenos_Aires")
+      .format("YYYY-MM-DD");
+    const response = await fetch(`${API_URL}/movements/filters?date=${today}`);
     const data = await response.json();
     setMovements(data);
     setAllMovements(data);
